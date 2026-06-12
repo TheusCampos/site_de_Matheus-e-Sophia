@@ -26,16 +26,26 @@ export function Hero() {
         ease: "power3.out",
       });
 
-      // Parallax
+      // Parallax optimized for mobile
+      let ticking = false;
       const onScroll = () => {
-        const y = window.scrollY;
-        gsap.to(".hero-photo", { y: y * 0.3, duration: 0.4, overwrite: true });
-        gsap.to(".hero-text", {
-          y: y * 0.15,
-          opacity: Math.max(0, 1 - y / 600),
-          duration: 0.4,
-          overwrite: true,
-        });
+        if (!ticking) {
+          window.requestAnimationFrame(() => {
+            const y = window.scrollY;
+            // Only do parallax if near the top to save resources
+            if (y < window.innerHeight) {
+              gsap.to(".hero-photo", { y: y * 0.3, duration: 0.4, overwrite: true });
+              gsap.to(".hero-text", {
+                y: y * 0.15,
+                opacity: Math.max(0, 1 - y / 600),
+                duration: 0.4,
+                overwrite: true,
+              });
+            }
+            ticking = false;
+          });
+          ticking = true;
+        }
       };
       window.addEventListener("scroll", onScroll, { passive: true });
       return () => window.removeEventListener("scroll", onScroll);
@@ -50,9 +60,9 @@ export function Hero() {
     <section
       ref={ref}
       data-section="hero"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden content-auto"
     >
-      <div className="hero-photo absolute inset-0">
+      <div className="hero-photo absolute inset-0" style={{ willChange: "transform" }}>
         <img
           src={heroCouple}
           alt="Nós dois em um momento especial"
@@ -65,7 +75,10 @@ export function Hero() {
         <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/30 to-background" />
       </div>
 
-      <div className="hero-text relative z-10 px-6 max-w-4xl text-center">
+      <div
+        className="hero-text relative z-10 px-6 max-w-4xl text-center"
+        style={{ willChange: "transform, opacity" }}
+      >
         <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-2 mb-8">
           <Heart className="size-4 text-primary animate-heart-beat" fill="currentColor" />
           <span className="text-sm font-medium">

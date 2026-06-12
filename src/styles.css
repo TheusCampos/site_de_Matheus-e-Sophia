@@ -333,4 +333,9 @@
   .no-scroll {
     overflow: hidden;
   }
+
+  .content-auto {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 800px;
+  }
 }

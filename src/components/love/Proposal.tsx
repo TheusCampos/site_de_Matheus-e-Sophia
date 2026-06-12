@@ -75,7 +75,7 @@ export function Proposal() {
     <section
       ref={ref}
       data-section="proposal"
-      className="relative py-24 md:py-36 px-6 overflow-hidden"
+      className="relative py-24 md:py-36 px-6 overflow-hidden content-auto"
     >
       <div
         className="absolute inset-0 bg-gradient-aurora opacity-20 blur-3xl"

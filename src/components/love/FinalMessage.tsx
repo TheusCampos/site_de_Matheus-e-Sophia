@@ -47,7 +47,7 @@ export function FinalMessage() {
     <section
       ref={ref}
       data-section="final"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden px-6 py-24"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden px-6 py-24 content-auto"
     >
       <div className="absolute inset-0">
         {SLIDES.map((src, i) => (

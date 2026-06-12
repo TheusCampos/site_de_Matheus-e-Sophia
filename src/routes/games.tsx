@@ -1,12 +1,17 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, lazy, Suspense } from "react";
 import { ArrowLeft } from "lucide-react";
 import { Particles } from "@/components/love/Particles";
 import { Nav } from "@/components/love/Nav";
-import { Quiz } from "@/components/love/Quiz";
-import { MemoryGame } from "@/components/love/MemoryGame";
-import { WordGuess } from "@/components/love/WordGuess";
 import { Login } from "@/components/love/Login";
+
+const Quiz = lazy(() => import("@/components/love/Quiz").then((m) => ({ default: m.Quiz })));
+const MemoryGame = lazy(() =>
+  import("@/components/love/MemoryGame").then((m) => ({ default: m.MemoryGame })),
+);
+const WordGuess = lazy(() =>
+  import("@/components/love/WordGuess").then((m) => ({ default: m.WordGuess })),
+);
 
 export const Route = createFileRoute("/games")({
   head: () => ({
@@ -43,9 +48,15 @@ function GamesPage() {
         </p>
       </header>
 
-      <Quiz />
-      <MemoryGame />
-      <WordGuess />
+      <Suspense
+        fallback={
+          <div className="py-20 text-center text-primary animate-pulse">Carregando jogos...</div>
+        }
+      >
+        <Quiz />
+        <MemoryGame />
+        <WordGuess />
+      </Suspense>
 
       <footer className="py-12 text-center">
         <Link to="/" className="btn-ghost-romance text-sm inline-flex">

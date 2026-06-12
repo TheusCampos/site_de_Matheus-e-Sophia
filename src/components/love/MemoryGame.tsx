@@ -82,7 +82,7 @@ export function MemoryGame() {
   };
 
   return (
-    <section data-section="game" className="relative py-24 md:py-36 px-6">
+    <section data-section="game" className="relative py-24 md:py-36 px-6 content-auto">
       <div className="max-w-3xl mx-auto">
         <header className="text-center mb-10">
           <p className="font-script text-2xl text-primary mb-2">Bônus</p>
@@ -141,7 +141,7 @@ export function MemoryGame() {
                     className="absolute inset-0 rounded-2xl overflow-hidden border border-white/20"
                     style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
                   >
-                    <img src={c.img} alt="" className="size-full object-cover" />
+                    <img src={c.img} alt="" className="size-full object-cover" loading="lazy" decoding="async" />
                     {c.matched && (
                       <div className="absolute inset-0 bg-primary/30 grid place-items-center">
                         <Heart className="size-8 text-white drop-shadow-lg" fill="currentColor" />

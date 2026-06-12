@@ -2,7 +2,7 @@ import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
 import { d as useRouterState, L as Link, u as useRouter } from "../_libs/tanstack__react-router.mjs";
 import { m as isRedirect } from "../_libs/tanstack__router-core.mjs";
 import { g as gsapWithCSS } from "../_libs/gsap.mjs";
-import { a as createServerFn, T as TSS_SERVER_FUNCTION, g as getServerFnById } from "./server-DCzYpSM9.mjs";
+import { a as createServerFn, T as TSS_SERVER_FUNCTION, g as getServerFnById } from "./server-DI-QjkXt.mjs";
 import { L as Lock, H as Heart, G as Gamepad2 } from "../_libs/lucide-react.mjs";
 import { o as objectType, s as stringType } from "../_libs/zod.mjs";
 function useServerFn(serverFn) {
@@ -22,8 +22,17 @@ function useServerFn(serverFn) {
   }, [router, serverFn]);
 }
 function Particles({ count = 24 }) {
+  const [isMobile, setIsMobile] = reactExports.useState(false);
+  reactExports.useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile, { passive: true });
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+  const petalsCount = isMobile ? Math.floor(count / 2) : count;
+  const starsCount = isMobile ? 20 : 60;
   const petals = reactExports.useMemo(
-    () => Array.from({ length: count }, (_, i) => ({
+    () => Array.from({ length: petalsCount }, (_, i) => ({
       id: i,
       left: Math.random() * 100,
       delay: Math.random() * 12,
@@ -31,17 +40,17 @@ function Particles({ count = 24 }) {
       size: 8 + Math.random() * 14,
       opacity: 0.4 + Math.random() * 0.5
     })),
-    [count]
+    [petalsCount]
   );
   const stars = reactExports.useMemo(
-    () => Array.from({ length: 60 }, (_, i) => ({
+    () => Array.from({ length: starsCount }, (_, i) => ({
       id: i,
       top: Math.random() * 100,
       left: Math.random() * 100,
       delay: Math.random() * 4,
       size: 1 + Math.random() * 2
     })),
-    []
+    [starsCount]
   );
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { "aria-hidden": true, className: "pointer-events-none fixed inset-0 z-0 overflow-hidden", children: [
     stars.map((s) => /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -53,7 +62,8 @@ function Particles({ count = 24 }) {
           left: `${s.left}%`,
           width: s.size,
           height: s.size,
-          animationDelay: `${s.delay}s`
+          animationDelay: `${s.delay}s`,
+          willChange: "opacity"
         }
       },
       `s-${s.id}`
@@ -69,9 +79,10 @@ function Particles({ count = 24 }) {
           height: p.size,
           background: "radial-gradient(circle at 30% 30%, oklch(0.92 0.08 350), oklch(0.7 0.2 5))",
           opacity: p.opacity,
-          filter: "blur(0.5px)",
+          filter: isMobile ? "none" : "blur(0.5px)",
           animation: `float-petal ${p.duration}s linear ${p.delay}s infinite`,
-          boxShadow: "0 0 10px oklch(0.72 0.18 0 / 50%)"
+          boxShadow: isMobile ? "none" : "0 0 10px oklch(0.72 0.18 0 / 50%)",
+          willChange: "transform, opacity"
         }
       },
       `p-${p.id}`

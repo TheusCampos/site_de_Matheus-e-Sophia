@@ -1,10 +1,22 @@
-import { useMemo } from "react";
+import { useMemo, useEffect, useState } from "react";
 
 /** Floating cherry petals + twinkling stars background. Pure CSS, GPU-friendly. */
 export function Particles({ count = 24 }: { count?: number }) {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile, { passive: true });
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  const petalsCount = isMobile ? Math.floor(count / 2) : count;
+  const starsCount = isMobile ? 20 : 60;
+
   const petals = useMemo(
     () =>
-      Array.from({ length: count }, (_, i) => ({
+      Array.from({ length: petalsCount }, (_, i) => ({
         id: i,
         left: Math.random() * 100,
         delay: Math.random() * 12,
@@ -12,18 +24,18 @@ export function Particles({ count = 24 }: { count?: number }) {
         size: 8 + Math.random() * 14,
         opacity: 0.4 + Math.random() * 0.5,
       })),
-    [count],
+    [petalsCount],
   );
   const stars = useMemo(
     () =>
-      Array.from({ length: 60 }, (_, i) => ({
+      Array.from({ length: starsCount }, (_, i) => ({
         id: i,
         top: Math.random() * 100,
         left: Math.random() * 100,
         delay: Math.random() * 4,
         size: 1 + Math.random() * 2,
       })),
-    [],
+    [starsCount],
   );
 
   return (
@@ -38,6 +50,7 @@ export function Particles({ count = 24 }: { count?: number }) {
             width: s.size,
             height: s.size,
             animationDelay: `${s.delay}s`,
+            willChange: "opacity",
           }}
         />
       ))}
@@ -53,9 +66,10 @@ export function Particles({ count = 24 }: { count?: number }) {
             background:
               "radial-gradient(circle at 30% 30%, oklch(0.92 0.08 350), oklch(0.7 0.2 5))",
             opacity: p.opacity,
-            filter: "blur(0.5px)",
+            filter: isMobile ? "none" : "blur(0.5px)",
             animation: `float-petal ${p.duration}s linear ${p.delay}s infinite`,
-            boxShadow: "0 0 10px oklch(0.72 0.18 0 / 50%)",
+            boxShadow: isMobile ? "none" : "0 0 10px oklch(0.72 0.18 0 / 50%)",
+            willChange: "transform, opacity",
           }}
         />
       ))}

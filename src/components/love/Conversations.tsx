@@ -155,7 +155,7 @@ export function Conversations() {
   };
 
   return (
-    <section ref={ref} data-section="chat" className="relative py-24 md:py-36 px-6">
+    <section ref={ref} data-section="chat" className="relative py-24 md:py-36 px-6 content-auto">
       <div className="max-w-3xl mx-auto">
         <header className="cv-header text-center mb-12">
           <p className="font-script text-2xl text-primary mb-2">Capítulo 2</p>

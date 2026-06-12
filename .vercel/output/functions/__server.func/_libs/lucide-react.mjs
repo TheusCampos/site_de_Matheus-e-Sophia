@@ -237,15 +237,15 @@ export {
   Music2 as M,
   Pause as P,
   RotateCcw as R,
-  Sparkles as S,
+  SkipBack as S,
   VolumeX as V,
   X,
   ArrowDown as a,
-  ChevronLeft as b,
-  ChevronRight as c,
-  Star as d,
-  SkipBack as e,
-  Play as f,
-  SkipForward as g,
-  Volume2 as h
+  Play as b,
+  SkipForward as c,
+  Volume2 as d,
+  Sparkles as e,
+  ChevronLeft as f,
+  ChevronRight as g,
+  Star as h
 };

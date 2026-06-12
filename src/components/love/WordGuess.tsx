@@ -45,7 +45,7 @@ export function WordGuess() {
   };
 
   return (
-    <section ref={ref} className="relative py-16 md:py-24 px-6">
+    <section ref={ref} className="relative py-16 md:py-24 px-6 content-auto">
       <div className="max-w-2xl mx-auto">
         <header className="text-center mb-8">
           <p className="font-script text-2xl text-primary mb-1">Jogo</p>

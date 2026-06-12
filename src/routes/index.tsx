@@ -1,16 +1,26 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, lazy, Suspense } from "react";
 import { Login } from "@/components/love/Login";
 import { Intro } from "@/components/love/Intro";
 import { Hero } from "@/components/love/Hero";
-import { Gallery } from "@/components/love/Gallery";
-import { Conversations } from "@/components/love/Conversations";
-import { Proposal } from "@/components/love/Proposal";
-import { FinalMessage } from "@/components/love/FinalMessage";
 import { Particles } from "@/components/love/Particles";
 import { MusicPlayer, type Track } from "@/components/love/MusicPlayer";
 import { Nav } from "@/components/love/Nav";
 import { useSectionTracker } from "@/components/love/useSectionTracker";
+
+// Lazy loading heavy components to improve mobile performance (reduces main thread blocking)
+const Gallery = lazy(() =>
+  import("@/components/love/Gallery").then((m) => ({ default: m.Gallery })),
+);
+const Conversations = lazy(() =>
+  import("@/components/love/Conversations").then((m) => ({ default: m.Conversations })),
+);
+const Proposal = lazy(() =>
+  import("@/components/love/Proposal").then((m) => ({ default: m.Proposal })),
+);
+const FinalMessage = lazy(() =>
+  import("@/components/love/FinalMessage").then((m) => ({ default: m.FinalMessage })),
+);
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -70,7 +80,13 @@ function Page() {
       {!started && <Intro onStart={() => setStarted(true)} />}
 
       {started && (
-        <>
+        <Suspense
+          fallback={
+            <div className="h-screen w-full flex items-center justify-center text-primary animate-pulse">
+              Carregando nosso amor...
+            </div>
+          }
+        >
           <Hero />
           <Gallery />
           <Conversations />
@@ -79,7 +95,7 @@ function Page() {
           <footer className="relative py-12 text-center text-xs text-muted-foreground">
             Feito com ❤️ — para Sophia.
           </footer>
-        </>
+        </Suspense>
       )}
 
       <MusicPlayer tracks={TRACKS} activeId={activeTrackId} started={started} />

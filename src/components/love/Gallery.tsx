@@ -218,7 +218,7 @@ export function Gallery() {
       ref={ref}
       id="memories"
       data-section="gallery"
-      className="relative py-24 md:py-36 px-6"
+      className="relative py-24 md:py-36 px-6 content-auto"
     >
       <div className="max-w-6xl mx-auto">
         <header className="gal-header text-center mb-14">
