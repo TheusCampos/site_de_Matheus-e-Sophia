@@ -1,0 +1,336 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-rose: var(--rose);
+  --color-rose-deep: var(--rose-deep);
+  --color-blush: var(--blush);
+  --color-cream: var(--cream);
+  --font-display: var(--font-display);
+  --font-script: var(--font-script);
+}
+
+:root {
+  --radius: 1rem;
+
+  /* Cherry Blossom palette — deep midnight rose canvas with petal accents */
+  --background: oklch(0.16 0.04 350);
+  --foreground: oklch(0.98 0.01 350);
+
+  --card: oklch(0.22 0.05 350 / 60%);
+  --card-foreground: oklch(0.98 0.01 350);
+
+  --popover: oklch(0.2 0.05 350);
+  --popover-foreground: oklch(0.98 0.01 350);
+
+  --primary: oklch(0.72 0.18 0); /* #e88aab vibe */
+  --primary-foreground: oklch(0.16 0.04 350);
+
+  --secondary: oklch(0.94 0.05 350); /* #f8c8d8 */
+  --secondary-foreground: oklch(0.16 0.04 350);
+
+  --muted: oklch(0.28 0.04 350);
+  --muted-foreground: oklch(0.82 0.04 350);
+
+  --accent: oklch(0.62 0.2 5); /* #c45c7c */
+  --accent-foreground: oklch(0.98 0.01 350);
+
+  --destructive: oklch(0.6 0.22 25);
+  --destructive-foreground: oklch(0.98 0.01 350);
+
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.72 0.18 0 / 60%);
+
+  --blush: oklch(0.97 0.02 350); /* #fef0f5 */
+  --rose: oklch(0.78 0.15 355);
+  --rose-deep: oklch(0.55 0.22 5);
+  --cream: oklch(0.96 0.02 60);
+
+  --gradient-romance: linear-gradient(
+    135deg,
+    oklch(0.72 0.18 0) 0%,
+    oklch(0.62 0.2 5) 50%,
+    oklch(0.45 0.2 340) 100%
+  );
+  --gradient-petal: radial-gradient(ellipse at top, oklch(0.62 0.2 5 / 35%), transparent 60%);
+  --gradient-aurora: conic-gradient(
+    from 180deg at 50% 50%,
+    oklch(0.72 0.18 0 / 40%),
+    oklch(0.55 0.22 5 / 40%),
+    oklch(0.42 0.18 320 / 40%),
+    oklch(0.72 0.18 0 / 40%)
+  );
+
+  --shadow-glow: 0 0 60px oklch(0.72 0.18 0 / 35%), 0 10px 40px oklch(0 0 0 / 40%);
+  --shadow-soft: 0 20px 60px -20px oklch(0 0 0 / 50%);
+
+  --font-display: "Playfair Display", "Cormorant Garamond", Georgia, serif;
+  --font-script: "Dancing Script", "Caveat", cursive;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html,
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: "Inter", system-ui, sans-serif;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -10%, oklch(0.55 0.22 5 / 25%), transparent 60%),
+      radial-gradient(ellipse 60% 50% at 100% 100%, oklch(0.42 0.18 320 / 25%), transparent 60%);
+    background-attachment: fixed;
+  }
+
+  ::selection {
+    background-color: oklch(0.72 0.18 0 / 50%);
+    color: var(--color-foreground);
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display);
+  }
+  .font-script {
+    font-family: var(--font-script);
+  }
+
+  .glass {
+    background: oklch(1 0 0 / 6%);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid oklch(1 0 0 / 12%);
+  }
+
+  .glass-strong {
+    background: oklch(0.22 0.05 350 / 75%);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid oklch(1 0 0 / 14%);
+  }
+
+  .text-gradient-romance {
+    background: var(--gradient-romance);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .bg-gradient-romance {
+    background: var(--gradient-romance);
+  }
+  .bg-gradient-petal {
+    background: var(--gradient-petal);
+  }
+  .bg-gradient-aurora {
+    background: var(--gradient-aurora);
+  }
+
+  .shadow-glow {
+    box-shadow: var(--shadow-glow);
+  }
+  .shadow-soft {
+    box-shadow: var(--shadow-soft);
+  }
+
+  .glow-text {
+    text-shadow:
+      0 0 30px oklch(0.72 0.18 0 / 60%),
+      0 0 60px oklch(0.55 0.22 5 / 40%);
+  }
+
+  .btn-romance {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem 2.25rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    color: var(--color-primary-foreground);
+    background: var(--gradient-romance);
+    box-shadow: var(--shadow-glow);
+    transition:
+      transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+      box-shadow 0.3s ease;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .btn-romance::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, transparent 30%, oklch(1 0 0 / 35%) 50%, transparent 70%);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+    z-index: -1;
+  }
+  .btn-romance:hover {
+    transform: translateY(-2px) scale(1.02);
+  }
+  .btn-romance:hover::before {
+    transform: translateX(100%);
+  }
+
+  .btn-ghost-romance {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.85rem 1.75rem;
+    border-radius: 9999px;
+    color: var(--color-foreground);
+    border: 1px solid oklch(1 0 0 / 25%);
+    background: oklch(1 0 0 / 6%);
+    backdrop-filter: blur(12px);
+    transition: all 0.3s ease;
+  }
+  .btn-ghost-romance:hover {
+    background: oklch(1 0 0 / 12%);
+    border-color: oklch(0.72 0.18 0 / 60%);
+  }
+
+  @keyframes float-petal {
+    0% {
+      transform: translateY(-10vh) translateX(0) rotate(0deg);
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+    }
+    90% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(110vh) translateX(40px) rotate(360deg);
+      opacity: 0;
+    }
+  }
+  @keyframes heart-beat {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    25% {
+      transform: scale(1.15);
+    }
+    50% {
+      transform: scale(1);
+    }
+    75% {
+      transform: scale(1.1);
+    }
+  }
+  @keyframes pulse-glow {
+    0%,
+    100% {
+      box-shadow: 0 0 30px oklch(0.72 0.18 0 / 30%);
+    }
+    50% {
+      box-shadow: 0 0 80px oklch(0.72 0.18 0 / 60%);
+    }
+  }
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes twinkle {
+    0%,
+    100% {
+      opacity: 0.3;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+  @keyframes aurora-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .animate-heart-beat {
+    animation: heart-beat 1.4s ease-in-out infinite;
+  }
+  .animate-pulse-glow {
+    animation: pulse-glow 3s ease-in-out infinite;
+  }
+  .animate-twinkle {
+    animation: twinkle 3s ease-in-out infinite;
+  }
+  .animate-fade-up {
+    animation: fade-up 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition:
+      opacity 1s ease,
+      transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .no-scroll {
+    overflow: hidden;
+  }
+}
